@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: #f4f6f9;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #1e1e2d;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #00bcd4;
+    }
+
+    .sidebar a {
+      color: #bbb;
+      text-decoration: none;
+      padding: 12px 15px;
+      margin: 4px 0;
+      border-radius: 6px;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #00bcd4;
+      color: #fff;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .header {
+      background: #fff;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      font-size: 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00bcd4;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+
+    .chart-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      body {
+        flex-direction: column;
+      }
+      .main-content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Users</a>
+    <a href="#">Analytics</a>
+    <a href="#">Settings</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h1>Dashboard Overview</h1>
+      <button style="background:#00bcd4;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;">+ Add</button>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Total Users</h3>
+        <p>1,240</p>
+      </div>
+      <div class="card">
+        <h3>Sales</h3>
+        <p>$8,420</p>
+      </div>
+      <div class="card">
+        <h3>Active Projects</h3>
+        <p>24</p>
+      </div>
+      <div class="card">
+        <h3>New Signups</h3>
+        <p>312</p>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-container">
+        <h3>Sales Chart</h3>
+        <canvas id="salesChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h3>Users Growth</h3>
+        <canvas id="usersChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sales Chart
+    const ctx1 = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Sales ($)',
+          data: [1200, 1900, 3000, 2500, 3200, 4000],
+          backgroundColor: 'rgba(0, 188, 212, 0.2)',
+          borderColor: '#00bcd4',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Users Chart
+    const ctx2 = document.getElementById('usersChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Users',
+          data: [50, 75, 150, 100, 200, 300, 250],
+          backgroundColor: '#00bcd4',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
